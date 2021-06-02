@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Projects/Android Architecture Component Apps/Note Taking App/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
+        <entry key="..\:/Android Projects/Android Architecture Component Apps/Note Taking App/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android Projects/Android Architecture Component Apps/Note Taking App/app/src/main/res/layout/note_item.xml" value="0.2" />
       </map>
     </option>
   </component>
