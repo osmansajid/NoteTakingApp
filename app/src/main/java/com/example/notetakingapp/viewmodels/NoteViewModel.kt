@@ -9,8 +9,8 @@ import com.example.notetakingapp.repositories.AppRepository
 import kotlinx.coroutines.launch
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
-    var noteRepository: AppRepository? = null
-    var allNotes: LiveData<List<Note>>? = null
+    private var noteRepository: AppRepository? = null
+    private var allNotes: LiveData<List<Note>>? = null
 
     init {
         noteRepository = AppRepository(application)
@@ -42,6 +42,6 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getAllNote(): LiveData<List<Note>>{
-        return allNotes!!;
+        return allNotes!!
     }
 }
