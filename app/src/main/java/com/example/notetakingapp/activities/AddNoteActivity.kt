@@ -39,11 +39,6 @@ class AddNoteActivity : AppCompatActivity() {
         finish()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val mMenuInflater = menuInflater
         mMenuInflater.inflate(R.menu.add_note_menu, menu)
