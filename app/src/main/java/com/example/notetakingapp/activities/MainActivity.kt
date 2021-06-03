@@ -1,13 +1,18 @@
 package com.example.notetakingapp.activities
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.notetakingapp.R
 import com.example.notetakingapp.adapters.NoteAdapter
 import com.example.notetakingapp.databinding.ActivityMainBinding
 import com.example.notetakingapp.viewmodels.NoteViewModel
@@ -50,5 +55,37 @@ class MainActivity : AppCompatActivity() {
             }
 
         }).attachToRecyclerView(binding.recyclerViewNotes)
+
     }
+
+
+    private fun showDeleteOrCancelDialog() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle("Delete all notes")
+        alertDialogBuilder.setMessage("Do you want to delete all notes?")
+        alertDialogBuilder.setPositiveButton("Yes",DialogInterface.OnClickListener { _, _ ->
+            noteViewModel!!.deleteAllNotes()
+            Toast.makeText(applicationContext,"Note deleted!",Toast.LENGTH_SHORT).show()
+        })
+        alertDialogBuilder.setNegativeButton("Cancel",DialogInterface.OnClickListener { _, _ ->
+        })
+        alertDialogBuilder.show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val mMenuInflater = menuInflater
+        mMenuInflater.inflate(R.menu.delete_note_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.menuDeleteAll->{
+                showDeleteOrCancelDialog();
+                true
+            }
+            else-> super.onOptionsItemSelected(item)
+        }
+    }
+
 }
