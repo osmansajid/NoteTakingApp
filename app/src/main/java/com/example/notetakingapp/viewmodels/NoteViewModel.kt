@@ -18,6 +18,12 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         allNotes = noteRepository.getAllNotes()
     }
 
+    fun delete(note: Note){
+        viewModelScope.launch(IO) {
+            noteRepository.delete(note)
+        }
+    }
+
     fun deleteAllNotes(){
         viewModelScope.launch(IO) {
             noteRepository.deleteAllNotes()
