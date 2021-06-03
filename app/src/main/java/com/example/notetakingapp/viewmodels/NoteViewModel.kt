@@ -6,38 +6,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.notetakingapp.modelclasses.Note
 import com.example.notetakingapp.repositories.AppRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
-    private var noteRepository: AppRepository? = null
+    private var noteRepository = AppRepository(application)
     private var allNotes: LiveData<List<Note>>? = null
 
     init {
-        noteRepository = AppRepository(application)
-        allNotes = noteRepository!!.getAllNotes()
-    }
-
-    fun insert(note: Note){
-        viewModelScope.launch {
-            noteRepository!!.insert(note)
-        }
-    }
-
-    fun update(note: Note){
-        viewModelScope.launch {
-            noteRepository!!.update(note)
-        }
-    }
-
-    fun delete(note: Note){
-        viewModelScope.launch {
-            noteRepository!!.delete(note)
-        }
+        allNotes = noteRepository.getAllNotes()
     }
 
     fun deleteAllNotes(){
-        viewModelScope.launch {
-            noteRepository!!.deleteAllNotes()
+        viewModelScope.launch(IO) {
+            noteRepository.deleteAllNotes()
         }
     }
 

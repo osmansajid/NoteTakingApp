@@ -1,5 +1,6 @@
 package com.example.notetakingapp.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,11 @@ class MainActivity : AppCompatActivity() {
         noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         noteViewModel!!.getAllNote().observe(this){
             adapter.setNotes(it)
+        }
+
+        binding.buttonAddNotes.setOnClickListener {
+            val intent = Intent(this,AddNoteActivity::class.java)
+            startActivity(intent)
         }
     }
 }
