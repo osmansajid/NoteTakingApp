@@ -9,8 +9,6 @@ data class Note (
 
     var description: String,
 
-    var priority: Int,
-
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 )

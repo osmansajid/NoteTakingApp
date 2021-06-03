@@ -45,7 +45,7 @@ abstract class NoteDataBase : RoomDatabase() {
 
         @Suppress("RedundantSuspendModifier")
         suspend fun populateDb(){
-            INSTANCE!!.noteDao().insert(Note("First Note","This is your first note!",1))
+            INSTANCE!!.noteDao().insert(Note("First Note","This is your first note!"))
         }
     }
 }
