@@ -19,7 +19,7 @@ class AddNoteViewModel(application: Application) : AndroidViewModel(application)
 
     fun update(note: Note){
         viewModelScope.launch(IO) {
-            noteRepository.update(note);
+            noteRepository.update(note)
         }
     }
 }
