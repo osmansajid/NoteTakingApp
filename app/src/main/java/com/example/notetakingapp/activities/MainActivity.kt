@@ -1,6 +1,5 @@
 package com.example.notetakingapp.activities
 
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notetakingapp.R
 import com.example.notetakingapp.adapters.NoteAdapter
+import com.example.notetakingapp.adapters.NoteAdapter.OnItemClickListener
+import com.example.notetakingapp.constants.GlobalConstants
 import com.example.notetakingapp.databinding.ActivityMainBinding
+import com.example.notetakingapp.modelclasses.Note
 import com.example.notetakingapp.viewmodels.NoteViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -56,6 +58,15 @@ class MainActivity : AppCompatActivity() {
 
         }).attachToRecyclerView(binding.recyclerViewNotes)
 
+        adapter.setListener(object : OnItemClickListener {
+            override fun onClick(note: Note) {
+                val intent = Intent(this@MainActivity,EditNoteActivity::class.java)
+                intent.putExtra(GlobalConstants.EXTRA_ID, note.id)
+                intent.putExtra(GlobalConstants.EXTRA_TITLE, note.title)
+                intent.putExtra(GlobalConstants.EXTRA_DESCRIPTION, note.description)
+                startActivity(intent)
+            }
+        })
     }
 
 
@@ -63,12 +74,13 @@ class MainActivity : AppCompatActivity() {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setTitle("Delete all notes")
         alertDialogBuilder.setMessage("Do you want to delete all notes?")
-        alertDialogBuilder.setPositiveButton("Yes",DialogInterface.OnClickListener { _, _ ->
+        alertDialogBuilder.setPositiveButton("Yes") { _, _ ->
             noteViewModel!!.deleteAllNotes()
-            Toast.makeText(applicationContext,"Note deleted!",Toast.LENGTH_SHORT).show()
-        })
-        alertDialogBuilder.setNegativeButton("Cancel",DialogInterface.OnClickListener { _, _ ->
-        })
+            Toast.makeText(applicationContext, "Note deleted!", Toast.LENGTH_SHORT).show()
+        }
+        alertDialogBuilder.setNegativeButton("Cancel"){_, _ ->
+
+        }
         alertDialogBuilder.show()
     }
 
@@ -81,7 +93,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.menuDeleteAll->{
-                showDeleteOrCancelDialog();
+                showDeleteOrCancelDialog()
                 true
             }
             else-> super.onOptionsItemSelected(item)

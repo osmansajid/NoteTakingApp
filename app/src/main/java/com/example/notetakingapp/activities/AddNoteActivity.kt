@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.notetakingapp.R
+import com.example.notetakingapp.constants.GlobalConstants
 import com.example.notetakingapp.databinding.ActivityAddNoteBinding
 import com.example.notetakingapp.modelclasses.Note
 import com.example.notetakingapp.viewmodels.AddNoteViewModel
@@ -24,7 +25,13 @@ class AddNoteActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close)
-        title = "Add Note"
+        if(intent.hasExtra(GlobalConstants.EXTRA_ID)){
+            title = "Edit Note"
+            binding.editTextTitle.setText(intent.getStringExtra(GlobalConstants.EXTRA_TITLE))
+            binding.editTextDescription.setText(intent.getStringExtra(GlobalConstants.EXTRA_DESCRIPTION))
+        }
+        else title = "Add Note"
+
     }
 
     private fun saveNote() {
@@ -35,9 +42,24 @@ class AddNoteActivity : AppCompatActivity() {
                 .show()
             return
         }
-        viewModel!!.insert(Note(title = title, description = description))
+
+        val note = Note(title = title, description = description)
+
+        if(intent.hasExtra(GlobalConstants.EXTRA_ID)){
+            val id = intent.getIntExtra(GlobalConstants.EXTRA_ID,-1)
+            note.id = id
+            if(id != -1){
+                viewModel!!.update(note)
+                Toast.makeText(applicationContext, "Note updated!", Toast.LENGTH_SHORT).show()
+            }
+        }
+        else {
+            viewModel!!.insert(note)
+            Toast.makeText(applicationContext, "Note added!", Toast.LENGTH_SHORT).show()
+        }
         finish()
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val mMenuInflater = menuInflater
@@ -54,4 +76,5 @@ class AddNoteActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

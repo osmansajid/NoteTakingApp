@@ -8,18 +8,12 @@ import com.example.notetakingapp.repositories.AppRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class AddNoteViewModel(application: Application) : AndroidViewModel(application) {
-    private var noteRepository : AppRepository = AppRepository(application)
+class EditNoteViewModel(application: Application) : AndroidViewModel(application) {
+    private val noteRepository = AppRepository(application)
 
-    fun insert(note: Note) {
+    fun delete(note: Note){
         viewModelScope.launch(IO) {
-            noteRepository.insert(note)
-        }
-    }
-
-    fun update(note: Note){
-        viewModelScope.launch(IO) {
-            noteRepository.update(note);
+            noteRepository.delete(note)
         }
     }
 }

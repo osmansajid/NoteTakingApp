@@ -10,10 +10,19 @@ import com.example.notetakingapp.modelclasses.Note
 
 class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     private var allNotes: List<Note> = arrayListOf()
+    private var listener: OnItemClickListener? = null
 
-    class NoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class NoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
         var textViewDescription: TextView = itemView.findViewById(R.id.textViewDescription)
+
+        init {
+            itemView.setOnClickListener{
+                if(listener != null && adapterPosition != RecyclerView.NO_POSITION){
+                    listener!!.onClick(allNotes[adapterPosition])
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
@@ -38,5 +47,13 @@ class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
 
     fun getNote(pos: Int): Note{
         return allNotes[pos]
+    }
+
+    interface OnItemClickListener{
+        fun onClick(note: Note)
+    }
+
+    fun setListener(listener: OnItemClickListener){
+        this.listener = listener
     }
 }
