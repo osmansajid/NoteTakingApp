@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         noteViewModel!!.getAllNote().observe(this){
-            adapter.setNotes(it)
+            adapter.submitList(it)
         }
 
         binding.buttonAddNotes.setOnClickListener {
