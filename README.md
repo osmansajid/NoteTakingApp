@@ -1,2 +1,10 @@
 # NoteTakingApp
-This project is done for learning more about MVVM, Room database, android architecture components and fun purpose
+This project is a note taking app.It is done for learning and fun purpose
+Language and components used are:
+
+*Kotlin
+*MVVM Architecture 
+*Android Architecture Components( ViewModels, LiveData etc.)
+*Room
+*Coroutines
+*View Binding
