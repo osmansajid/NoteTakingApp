@@ -6,17 +6,23 @@ plugins {
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdk 30
+    compileSdk 28
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.example.notetakingapp"
         minSdk 21
-        targetSdk 30
+        targetSdk 28
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
